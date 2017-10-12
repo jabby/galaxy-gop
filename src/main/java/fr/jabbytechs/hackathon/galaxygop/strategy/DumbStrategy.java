@@ -34,7 +34,7 @@ public class DumbStrategy {
 			Planet rebel = tuple._2;
 			
 			if (empire.getUnits() > 3) {
-				assaultFleets.add(new AssaultFleet(Math.min(empire.getUnits() - 1, rebel.getUnits() + 1), empire.getId(), rebel.getId()));
+				assaultFleets.add(new AssaultFleet(Math.max(3, Math.min(empire.getUnits() - 1, rebel.getUnits() + 1)), empire.getId(), rebel.getId()));
 			}
 		}
 				
