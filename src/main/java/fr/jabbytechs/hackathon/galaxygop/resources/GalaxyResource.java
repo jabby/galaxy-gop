@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 
 import fr.jabbytechs.hackathon.galaxygop.model.Galaxy;
+import fr.jabbytechs.hackathon.galaxygop.strategy.StrategyFinder;
 
 @Path("/galaxy")
 public class GalaxyResource {
@@ -21,11 +22,7 @@ public class GalaxyResource {
 		// just to know what you received in console
 		System.out.println(param);
 		
-		// create a Galaxy
 		Gson gson = new Gson();
-		Galaxy galaxy = gson.fromJson(param, Galaxy.class);
-		
-		// Create an answer here...
-		return gson.toJson(galaxy);
+		return gson.toJson(StrategyFinder.find(gson.fromJson(param, Galaxy.class)));
 	}	
 }

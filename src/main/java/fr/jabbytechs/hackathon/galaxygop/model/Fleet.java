@@ -7,7 +7,7 @@ public class Fleet {
 	private int to;
 	private int turn;
 	private int left;
-
+	
 	public int getOwner() {
 		return owner;
 	}

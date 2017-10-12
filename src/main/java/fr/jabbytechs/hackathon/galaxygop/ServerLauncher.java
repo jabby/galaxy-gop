@@ -11,7 +11,7 @@ public class ServerLauncher {
 	public static void main(String[] args) throws Exception {
 
 		ResourceConfig config = new ResourceConfig();
-		config.packages("fr.jabbytechs.hackathon.galaxygop");
+		config.packages("fr.jabbytechs.hackathon.galaxygop.resources");
 		
 		ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(config));
 		jerseyServlet.setInitOrder(0);
