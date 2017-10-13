@@ -55,4 +55,12 @@ public class Fleet {
 	public void setLeft(int left) {
 		this.left = left;
 	}
+
+	@Override
+	public String toString() {
+		return "Fleet [owner=" + owner + ", units=" + units + ", from=" + from + ", to=" + to + ", turn=" + turn
+				+ ", left=" + left + "]";
+	}
+	
+	
 }

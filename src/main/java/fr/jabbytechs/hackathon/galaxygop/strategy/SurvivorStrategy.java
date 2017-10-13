@@ -34,12 +34,6 @@ public class SurvivorStrategy {
 		rebelPlanets = galaxy.getPlanets().stream().filter(p -> p.getOwner() != 1 && p.getOwner() != 0)
 				.collect(Collectors.toMap(Planet::getId, Function.identity()));
 
-		empireFleets = galaxy.getFleets().stream().filter(p -> p.getOwner() == 1)
-				.collect(Collectors.toMap(Fleet::getTo, Function.identity()));
-
-		rebelFleets = galaxy.getFleets().stream().filter(p -> p.getOwner() != 1)
-				.collect(Collectors.toMap(Fleet::getTo, Function.identity()));
-
 
 		List<Planet> enemyPlanets = new ArrayList<>();
 		enemyPlanets.addAll(neutralPlanets.values());
