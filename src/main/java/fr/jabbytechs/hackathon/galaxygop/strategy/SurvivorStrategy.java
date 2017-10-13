@@ -61,7 +61,7 @@ public class SurvivorStrategy {
 			List<Planet> rebels = tuple._2;
 			boolean sendFleet = false;
 			
-			if (isNotTerraforming(empire) && rebelFleets.get(empire.getId()).isEmpty()) {
+			if (isNotTerraforming(empire) && rebelFleets.get(empire.getId()) == null) {
 				// send fleet
 				for (Planet rebelPlanet : rebels) {
 					if (empire.getUnits() > 3) {
