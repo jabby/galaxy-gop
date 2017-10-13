@@ -17,6 +17,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>ch.obermuhlner</groupId>
+			<artifactId>big-math</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
 			<groupId>io.vavr</groupId>
 			<artifactId>vavr</artifactId>
 			<version>0.9.1</version>
@@ -61,6 +66,13 @@
 			<artifactId>jersey-media-moxy</artifactId>
 			<version>2.25</version>
 		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

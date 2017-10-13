@@ -3,6 +3,7 @@ package fr.jabbytechs.hackathon.galaxygop.resources;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -17,12 +18,13 @@ public class GalaxyResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String updateGalaxy(String param) {
+	@Path("/{strategy}")
+	public String updateGalaxy(@PathParam("strategy") String strategy, String param) {
 		
 		// just to know what you received in console
 		System.out.println(param);
 		
 		Gson gson = new Gson();
-		return gson.toJson(StrategyFinder.find(gson.fromJson(param, Galaxy.class)));
+		return gson.toJson(StrategyFinder.find(strategy, gson.fromJson(param, Galaxy.class)));
 	}	
 }
