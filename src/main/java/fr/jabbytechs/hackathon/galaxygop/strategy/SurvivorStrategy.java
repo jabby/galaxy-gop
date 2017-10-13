@@ -20,8 +20,8 @@ public class SurvivorStrategy {
 	private Map<Integer, Planet> neutralPlanets;
 	private Map<Integer, Planet> empirePlanets;
 	private Map<Integer, Planet> rebelPlanets;
-	private Map<Integer, Fleet> empireFleets;
-	private Map<Integer, Fleet> rebelFleets;
+	private Map<Integer, List<Fleet>> empireFleets;
+	private Map<Integer, List<Fleet>> rebelFleets;
 
 	public Command apply(Galaxy galaxy) {
 
@@ -34,6 +34,16 @@ public class SurvivorStrategy {
 		rebelPlanets = galaxy.getPlanets().stream().filter(p -> p.getOwner() != 1 && p.getOwner() != 0)
 				.collect(Collectors.toMap(Planet::getId, Function.identity()));
 
+		empireFleets = galaxy.getFleets().stream().filter(f -> f.getOwner() == 1)
+				.collect(Collectors.groupingBy(Fleet::getTo));
+
+		rebelFleets = galaxy.getFleets().stream().filter(f -> f.getOwner() != 1)
+				.collect(Collectors.groupingBy(Fleet::getTo));
+
+		long nbPlanetInTerraformation = galaxy.getPlanets().stream().filter(p -> p.getOwner() == 1)
+				.map(p -> isNotTerraforming(p))
+				.filter(b -> !b)
+				.count();
 
 		List<Planet> enemyPlanets = new ArrayList<>();
 		enemyPlanets.addAll(neutralPlanets.values());
@@ -51,7 +61,7 @@ public class SurvivorStrategy {
 			List<Planet> rebels = tuple._2;
 			boolean sendFleet = false;
 			
-			if (empire.getTr() == null || empire.getTr().equals("-1")) {
+			if (isNotTerraforming(empire) && rebelFleets.get(empire.getId()).isEmpty()) {
 				// send fleet
 				for (Planet rebelPlanet : rebels) {
 					if (empire.getUnits() > 3) {
@@ -63,13 +73,21 @@ public class SurvivorStrategy {
 					}
 				}
 				// no fleet and can be terraforming
-				if (!sendFleet && Arrays.asList("H", "K", "L").contains(empire.getClasse())) {
+				if (!sendFleet && canBeTerraformed(empire) && nbPlanetInTerraformation < 3) {
 					terraformings.add(new Terraforming(empire.getId()));
 				} 
 			}
 		}
 
 		return new Command(assaultFleets, terraformings);
+	}
+
+	private boolean canBeTerraformed(Planet empire) {
+		return Arrays.asList("H", "K", "L").contains(empire.getClasse());
+	}
+
+	private boolean isNotTerraforming(Planet empire) {
+		return empire.getTr() == null || empire.getTr().equals("-1");
 	}
 
 }
